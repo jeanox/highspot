@@ -1,42 +1,40 @@
-.App {
+body {
+  min-height: 500px;
+}
+
+pre {
+  background-color: pink;
+  max-width: 400px;
+  overflow: scroll;
+}
+
+img {
+  max-width: 300px;
+}
+
+// DELETE LATER
+.title {
+  font-family: 'Carter One';
+}
+.container {
+  margin-top: 50px;
   text-align: center;
+}
 
-  &-logo {
-    border: 1px dashed red;
+.image-grid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: minmax(50px, auto);
+  
+  .image-item:nth-child(5n){
+    grid-column-end: span 2;
   }
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  
+  img{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
