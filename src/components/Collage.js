@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { searchTerms } from './Search';
 
-// console.log(`SEARCH, AFTER: ${searchTerms}`); // RETURNS A THING!
+console.log(`IN SEARCH OF BIKI: ${searchTerms}`); // RETURNS A THING!
 
 // I feel like this could be busted out into its own file
 const Card = ({ aKey, url, title, copy, set, type }) => (
@@ -46,7 +47,7 @@ const Collage = () => {
     console.log(`THE FINAL QUERY: ${apiRoot}?pageSize=${count}&page=${currentPage}&name=`);//${searchTerms}
 
     axios
-      .get(`${apiRoot}?pageSize=${count}&page=${currentPage}&name=`,{//${searchTerms}
+      .get(`${apiRoot}?pageSize=${count}&page=${currentPage}&name=${searchTerms}`,{//
         params: {
           pageSize: 20
         }
