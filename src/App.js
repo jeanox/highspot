@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 import Collage from './components/Collage';
-import Search from './components/Search';
 
 function App() {
   return (
@@ -13,7 +12,6 @@ function App() {
         <h2 className="subtitle">I am a cheeky devil</h2>
       </div>
 
-      <Search/>
       <Collage />
 
     </div>

@@ -1,9 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from 'axios';
+import _ from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { searchTerms } from './Search';
 
-console.log(`IN SEARCH OF BIKI: ${searchTerms}`); // RETURNS A THING!
+
+
+let searchTerms = '';
+const bikiHello = 'bikihello';
+
+
+// I hate having Search married with Collage, but sharing their data proved to be a bit dizzying and i gotta get this done.
+
+// Grab data, transform it, share it
+// const pushToArr = pushIt => {
+//   bikiArr = []; // reset it
+//   bikiArr.push(pushIt);
+// }
+
+// Delay queries while rendering component
+/*
+const Search = () => {
+  // NOTES
+  // When the input changes, wipe the gallery and re-init
+
+
+  const groomSearchTerms = rawTerms => {
+    searchTerms = rawTerms.split(' ').join('|');
+
+    // console.log(`SETQUERY: ${searchTerms}`); // RETURNS A THING!
+  };
+  
+  const [searchQuery, setSearchQuery] = useState("");
+  const delayedQuery = useRef(_.debounce(q => groomSearchTerms(q), 500)).current;
+  
+  const onChange = e => {
+    setSearchQuery(e.target.value);
+    delayedQuery(e.target.value);
+  };
+ 
+  return (
+    <div>
+      <label>Search for stuff</label>
+      <input
+        type="text"
+        value={searchQuery}
+        placeholder="type a thing"
+        onChange={onChange}
+      />
+    </div>
+  );
+}
+*/
+
+// console.log(`TAKE A BREAK BIKI: ${searchTerms}`);
+/////////
 
 // I feel like this could be busted out into its own file
 const Card = ({ aKey, url, title, copy, set, type }) => (
@@ -28,6 +78,33 @@ const Card = ({ aKey, url, title, copy, set, type }) => (
 let currentPage = 1;
 
 const Collage = () => {
+
+
+
+  const groomSearchTerms = rawTerms => {
+    searchTerms = rawTerms.split(' ').join('|');
+
+    console.log(`SETQUERY: ${searchTerms}`); // RETURNS A THING!
+  };
+  
+  const [searchQuery, setSearchQuery] = useState("");
+  const delayedQuery = useRef(_.debounce(q => groomSearchTerms(q), 500)).current;
+  
+  const onChange = e => {
+    setSearchQuery(e.target.value);
+    delayedQuery(e.target.value);
+    // RESETCARDS HERE
+    // fetchCardData(1);
+  };
+
+
+
+
+
+
+
+
+
   // We're going to load things in batches (pages), which means we'll need to increment with each call
   // initially set it to true so that the first call gets fired before scroll-triggered loading commences
   let morePages = true;
@@ -35,16 +112,18 @@ const Collage = () => {
   const [cardData, setCardData] = React.useState([]);
   const [loaded, setIsLoaded] = React.useState(false);
 
+  /*
   React.useEffect(() => {
-    fetchCardData();
+    // fetchCardData();
   }, []); // AHHHH, i missed the second argument and it was infinitely looping. Details :}
+  */
 
   // console.log(`BIKI TERMS: ${searchTerms}`);
 
   const fetchCardData = (count = 20) => {
     const apiRoot = "https://api.elderscrollslegends.io/v1/cards";
 
-    console.log(`THE FINAL QUERY: ${apiRoot}?pageSize=${count}&page=${currentPage}&name=`);//${searchTerms}
+    console.log(`THE FINAL QUERY: ${apiRoot}?pageSize=${count}&page=${currentPage}&name=${searchTerms}`);//${searchTerms}
 
     axios
       .get(`${apiRoot}?pageSize=${count}&page=${currentPage}&name=${searchTerms}`,{//
@@ -85,6 +164,14 @@ const Collage = () => {
     <div className="hero is-fullheight is-bold is-info">
       <div className="hero-body">
         <div className="container">
+
+          <label>Search for stuff</label>
+          <input
+            type="text"
+            value={searchQuery}
+            placeholder="type a thing"
+            onChange={onChange}
+          />
 
           <InfiniteScroll
             dataLength={cardData}
