@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from "react";
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-// I feel like this could be busted out to a nested component structure
+// console.log(`SEARCH, AFTER: ${searchTerms}`); // RETURNS A THING!
+
+// I feel like this could be busted out into its own file
 const Card = ({ aKey, url, title, copy, set, type }) => (
   <div className="card--wrap" key={aKey} >
     <div className="card__meta">
@@ -21,22 +23,14 @@ const Card = ({ aKey, url, title, copy, set, type }) => (
   </div>
 );
 
+// DISLIKE SCOPE; if it's nested in Collage, though, it doesn't iterate properly
+let currentPage = 1;
 
+const Collage = () => {
+  // We're going to load things in batches (pages), which means we'll need to increment with each call
+  // initially set it to true so that the first call gets fired before scroll-triggered loading commences
+  let morePages = true;
 
-
-// We're going to load things in batches (pages), which means we'll need to increment with each call
-let currentPage = 0;
-// initially set it to false in case the query is "squidward" or something random
-let morePages = true;
-
-
-
-// Search within TEXT and NAME because both are things users would care about
-// Handle multiple words
-// text=guard|prophecy&name=guard|prophecy
-const searchTerms = 'skeletor';
-
-let Collage = () => {
   const [cardData, setCardData] = React.useState([]);
   const [loaded, setIsLoaded] = React.useState(false);
 
@@ -44,11 +38,15 @@ let Collage = () => {
     fetchCardData();
   }, []); // AHHHH, i missed the second argument and it was infinitely looping. Details :}
 
+  // console.log(`BIKI TERMS: ${searchTerms}`);
+
   const fetchCardData = (count = 20) => {
     const apiRoot = "https://api.elderscrollslegends.io/v1/cards";
 
+    console.log(`THE FINAL QUERY: ${apiRoot}?pageSize=${count}&page=${currentPage}&name=`);//${searchTerms}
+
     axios
-      .get(`${apiRoot}?pageSize=${count}&page=${currentPage}&name=${searchTerms}`,{
+      .get(`${apiRoot}?pageSize=${count}&page=${currentPage}&name=`,{//${searchTerms}
         params: {
           pageSize: 20
         }
@@ -77,6 +75,7 @@ let Collage = () => {
     // When terms are passed, this works
     // When impossible terms are passed, this works
 
+
     return morePages;
   }
 
@@ -85,12 +84,6 @@ let Collage = () => {
     <div className="hero is-fullheight is-bold is-info">
       <div className="hero-body">
         <div className="container">
-          <div className="header content">
-            <h1 className="title">
-              Highspot Fun Nerdy Data Times
-            </h1>
-            <h2 className="subtitle">I am a cheeky devil</h2>
-          </div>
 
           <InfiniteScroll
             dataLength={cardData}
@@ -126,32 +119,3 @@ let Collage = () => {
 };
 
 export default Collage;
-
-/*
-// Memory leak happens if you don't cancel stuff
-var CancelToken = axios.CancelToken;
-var cancel;
-
-cancelToken: new CancelToken(function executor(c) {
-// An executor function receives a cancel function as a parameter
-cancel = c;
-}),
-
-.catch(err => {
-
-if(axios.isCancel(err)){
-
-console.log(`im canceled ${err}`);
-
-}
-else{
-
-console.log('im server response error');
-
-}
-
-});
-// cancel();
-
-// ReactDOM.render(<Collage />, document.getElementById("root"));
-*/
