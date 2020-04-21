@@ -3,57 +3,13 @@ import axios from 'axios';
 import _ from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-
-
+// INIT variables/values
 let searchTerms = '';
-const bikiHello = 'bikihello';
+let currentPage = 1;
+let clearResults = false;
 
-
-// I hate having Search married with Collage, but sharing their data proved to be a bit dizzying and i gotta get this done.
-
-// Grab data, transform it, share it
-// const pushToArr = pushIt => {
-//   bikiArr = []; // reset it
-//   bikiArr.push(pushIt);
-// }
-
-// Delay queries while rendering component
-/*
-const Search = () => {
-  // NOTES
-  // When the input changes, wipe the gallery and re-init
-
-
-  const groomSearchTerms = rawTerms => {
-    searchTerms = rawTerms.split(' ').join('|');
-
-    // console.log(`SETQUERY: ${searchTerms}`); // RETURNS A THING!
-  };
-  
-  const [searchQuery, setSearchQuery] = useState("");
-  const delayedQuery = useRef(_.debounce(q => groomSearchTerms(q), 500)).current;
-  
-  const onChange = e => {
-    setSearchQuery(e.target.value);
-    delayedQuery(e.target.value);
-  };
- 
-  return (
-    <div>
-      <label>Search for stuff</label>
-      <input
-        type="text"
-        value={searchQuery}
-        placeholder="type a thing"
-        onChange={onChange}
-      />
-    </div>
-  );
-}
-*/
-
-// console.log(`TAKE A BREAK BIKI: ${searchTerms}`);
-/////////
+const apiRoot = "https://api.elderscrollslegends.io/v1/cards";
+let query = apiRoot;
 
 // I feel like this could be busted out into its own file
 const Card = ({ aKey, url, title, copy, set, type }) => (
@@ -74,15 +30,13 @@ const Card = ({ aKey, url, title, copy, set, type }) => (
   </div>
 );
 
-// DISLIKE SCOPE; if it's nested in Collage, though, it doesn't iterate properly
-let currentPage = 1;
-
 const Collage = () => {
 
 
 
   const groomSearchTerms = rawTerms => {
     searchTerms = rawTerms.split(' ').join('|');
+    // could regex for weird characters and multiple empty spaces
 
     console.log(`SETQUERY: ${searchTerms}`); // RETURNS A THING!
   };
@@ -93,17 +47,20 @@ const Collage = () => {
   const onChange = e => {
     setSearchQuery(e.target.value);
     delayedQuery(e.target.value);
-    // RESETCARDS HERE
-    // fetchCardData(1);
+
+    // Set Query
+    query = `${apiRoot}?pageSize=20&page=1&name=${searchTerms}`;
+    
+    // RESET Page
+    currentPage = 1;
+
+    // RESET Cards
+    clearResults = true;
+
+    fetchCardData();
+    
+    console.log(`CLEAR RESULTS?: ${clearResults}`);
   };
-
-
-
-
-
-
-
-
 
   // We're going to load things in batches (pages), which means we'll need to increment with each call
   // initially set it to true so that the first call gets fired before scroll-triggered loading commences
@@ -112,34 +69,34 @@ const Collage = () => {
   const [cardData, setCardData] = React.useState([]);
   const [loaded, setIsLoaded] = React.useState(false);
 
-  /*
   React.useEffect(() => {
-    // fetchCardData();
+    console.log(`CLEAR RESULTS?: ${clearResults}`);
+    fetchCardData();
   }, []); // AHHHH, i missed the second argument and it was infinitely looping. Details :}
-  */
-
-  // console.log(`BIKI TERMS: ${searchTerms}`);
 
   const fetchCardData = (count = 20) => {
-    const apiRoot = "https://api.elderscrollslegends.io/v1/cards";
 
-    console.log(`THE FINAL QUERY: ${apiRoot}?pageSize=${count}&page=${currentPage}&name=${searchTerms}`);//${searchTerms}
-
+    console.log(`Before Query: ${query}`);
+    
+    query = `${apiRoot}?pageSize=${count}&page=${currentPage}&name=${searchTerms}`;
+    
+    console.log(`After Query: ${query}`);
     axios
-      .get(`${apiRoot}?pageSize=${count}&page=${currentPage}&name=${searchTerms}`,{//
+      .get( query,{
         params: {
           pageSize: 20
         }
       })
-      .then(res => {
+      .then(response => {
 
         currentPage = currentPage + 1;
-        setCardData([...cardData, ...res.data.cards]);
+
+        setCardData([...cardData, ...response.data.cards]);
         setIsLoaded(true);
         
         // Keep an eye on how much junk we got! ;D
-        // console.log(JSON.stringify(res.data.cards));
         console.log(`Current Page: ${currentPage}, Card Data: ${cardData.length}, More Pages: ${morePages}`);
+        console.log(`New Data Length: ${cardData.length}`);
       })
       .catch(function (error) {
         console.log(`Server ERROR: ${error}`);
@@ -159,6 +116,49 @@ const Collage = () => {
     return morePages;
   }
 
+  let biki;
+  const renderGallery = () => {
+    if (clearResults === true) {
+      biki = <InfiniteScroll>Nothing</InfiniteScroll>
+    } else {
+      biki = 
+        <InfiniteScroll
+          dataLength={cardData}
+          next={() => fetchCardData(20) } 
+          hasMore={checkMorePages()}
+          loader={
+            <img
+              src="https://res.cloudinary.com/chuloo/image/upload/v1550093026/scotch-logo-gif_jq4tgr.gif"
+              alt="loading"
+            />
+          }
+          endMessage={<p>No more results</p>}
+        >
+          <div className="image-grid" style={{ marginTop: "30px" }}>
+            {loaded
+              ? cardData.map((card, index) => (
+                  <Card
+                    key={index}
+                    title={card.name}
+                    copy={card.text}
+                    url={card.imageUrl}
+                    set={card.set.name}
+                    type={card.type}
+                  />
+                ))
+              : ""}
+          </div>
+        </InfiniteScroll>
+      ;
+    }
+
+    // console.log(biki);
+
+    // clearResults = false;
+
+
+    return biki;
+  }
 
   return (
     <div className="hero is-fullheight is-bold is-info">
@@ -173,33 +173,12 @@ const Collage = () => {
             onChange={onChange}
           />
 
-          <InfiniteScroll
-            dataLength={cardData}
-            next={() => fetchCardData(20) } 
-            hasMore={checkMorePages()}
-            loader={
-              <img
-                src="https://res.cloudinary.com/chuloo/image/upload/v1550093026/scotch-logo-gif_jq4tgr.gif"
-                alt="loading"
-              />
-            }
-            endMessage={<p>No more results</p>}
-          >
-            <div className="image-grid" style={{ marginTop: "30px" }}>
-              {loaded
-                ? cardData.map((card, index) => (
-                    <Card
-                      key={index}
-                      title={card.name}
-                      copy={card.text}
-                      url={card.imageUrl}
-                      set={card.set.name}
-                      type={card.type}
-                    />
-                  ))
-                : ""}
-            </div>
-          </InfiniteScroll>
+          {renderGallery()}
+
+          {/* SCROLL & LOAD */}
+          {/* IF input, unmount InfiniteScroll, mount */}
+
+          
         </div>
       </div>
     </div>
