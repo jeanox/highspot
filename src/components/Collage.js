@@ -33,6 +33,13 @@ const Card = ({ aKey, url, title, copy, set, type }) => (
 const Collage = () => {
 
 
+  // STATE OF BIKI BRAIN:
+  // Having trouble rendering the Search Results -- can render strings, but re-rendering the component is odd;
+  // DO: paranoia commit, remove all comments and start fresh
+  // TRY: outputting the data being fetched to make sure the query isn't the issue
+  // THEN TRY: scoping out how things are rendered so that conditionals actually apply
+  // THEN TRY: a state-based solution, since state is the thing that's changing, tbh
+
 
   const groomSearchTerms = rawTerms => {
     searchTerms = rawTerms.split(' ').join('|');
@@ -42,6 +49,8 @@ const Collage = () => {
   };
   
   const [searchQuery, setSearchQuery] = useState("");
+
+  // limit the queries so that they're not sending out with every character input
   const delayedQuery = useRef(_.debounce(q => groomSearchTerms(q), 500)).current;
   
   const onChange = e => {
@@ -58,6 +67,8 @@ const Collage = () => {
     clearResults = true;
 
     fetchCardData();
+
+    renderGallery();
     
     console.log(`CLEAR RESULTS?: ${clearResults}`);
   };
@@ -117,10 +128,13 @@ const Collage = () => {
   }
 
   let biki;
+  let bikiCount = 0;
   const renderGallery = () => {
     if (clearResults === true) {
-      biki = <InfiniteScroll>Nothing</InfiniteScroll>
+      biki = `Silence is golden + ${bikiCount + 1}`;
+      console.log(`render QUERY(clear): ${query}`);
     } else {
+      console.log(`render QUERY(load): ${query}`);
       biki = 
         <InfiniteScroll
           dataLength={cardData}
@@ -154,7 +168,6 @@ const Collage = () => {
 
     // console.log(biki);
 
-    // clearResults = false;
 
 
     return biki;
