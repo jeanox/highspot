@@ -5,11 +5,9 @@ import Collage from './components/Collage';
 function App() {
   return (
     <div className="App">
-      <div className="header content">
-        <h1 className="title">
-          Highspot Fun Nerdy Data Times
-        </h1>
-        <h2 className="subtitle">I am a cheeky devil</h2>
+      <div className="header">
+        <h1 className="header--title">Elder Scrolls Legends ala React.js</h1>
+        <h2 className="header--subtitle">Scroll to browse or search for specific cards</h2>
       </div>
 
       <Collage />

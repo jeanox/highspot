@@ -1,40 +1,93 @@
+// Since height matters, setting a min-height for images while they load seems like a good idea
+
+$gutters: 30px;
+
 body {
-  min-height: 500px;
+  padding: $gutters;
 }
 
-pre {
-  background-color: pink;
-  max-width: 400px;
-  overflow: scroll;
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-img {
-  max-width: 300px;
+.header {
+  margin-bottom: 2rem;
+
+  &--title,
+  &--subtitle {
+    text-align: center;
+  }
+
+  &--title {
+    font-family: 'Carter One';
+  }
+
+  &--subtitle {
+    font-size: 1rem;
+  }
 }
 
-// DELETE LATER
-.title {
-  font-family: 'Carter One';
-}
-.container {
-  margin-top: 50px;
-  text-align: center;
-}
-
-.image-grid {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-auto-rows: minmax(50px, auto);
-  
-  .image-item:nth-child(5n){
-    grid-column-end: span 2;
+.card {
+  &--wrap {
+    border-radius: 3px;
+    padding: 0 .5rem;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .25);
   }
   
-  img{
-    display: flex;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  // &__image {}
+  
+  &__title {
+    font-weight: 800;
+    margin-bottom: .25rem;
+  }
+
+  &__copy {
+    &--meta {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+
+      font-size: .75rem;
+      background-color: rgba(230,230,230, 1);
+    }
+
+    
+  //   &--text {}
+  }
+}
+
+.gallery {
+  &__container {
+    text-align: center;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    label {
+      display: block;
+      margin-bottom: .5rem;
+    }
+
+    input {
+      width: 80%;
+      padding: .5rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: minmax(50px, auto);
+    padding: 0 $gutters;
+    
+    .image-item:nth-child(5n){
+      grid-column-end: span 2;
+    }
+    
+    img{
+      height: 400px;
+    }
   }
 }

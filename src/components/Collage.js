@@ -1,3 +1,4 @@
+import spinner from '../assets/images/load.gif';
 import React, { useState, useRef } from "react";
 import axios from 'axios';
 import _ from 'lodash';
@@ -16,18 +17,19 @@ let query = apiRoot;
 // I feel like this could be busted out into its own file
 const Card = ({ aKey, url, title, copy, set, type }) => (
   <div className="card--wrap" key={aKey} >
-    <div className="card__meta">
-      <p className="">{set}</p>
-      <p className="">{type}</p>
-    </div>
+    <p className="card__title">{title}</p>
     <div className="card__image">
       <img src={url} alt={title}/>
       {/* <pre>{url}</pre> */}
     </div>
     <div className="card__copy">
-      <p className="copy--title">{title}</p>
+      <div className="card__copy--meta">
+        <p className="">{set}</p>
+        <p className="">{type}</p>
+      </div>
+      
       {/* This should account for multiple paragraphs later */}
-      <p className="copy--text">{copy}</p> 
+      <p className="card__copy--text">{copy}</p> 
     </div>
   </div>
 );
@@ -135,6 +137,7 @@ const Collage = () => {
     if (cardData.length >= 20) {
       morePages = true;
     } else if (isDone === true) {
+      /// FIGURE OUT IF IT'S DONE
       morePages = false;
     } else {
       morePages = false;
@@ -148,6 +151,7 @@ const Collage = () => {
   let bikiCount = 0;
 
   const renderGallery = () => {
+    // This duplication makes me cry; it serves to re-render the component in 2 instances
     if (clearResults === true) {
       biki =
       <InfiniteScroll
@@ -156,13 +160,13 @@ const Collage = () => {
           hasMore={checkMorePages()}
           loader={
             <img
-              src="https://res.cloudinary.com/chuloo/image/upload/v1550093026/scotch-logo-gif_jq4tgr.gif"
+              src={spinner}
               alt="loading"
             />
           }
           endMessage={<p>No more results</p>}
         >
-          <div className="image-grid" style={{ marginTop: "30px" }}>
+          <div className="gallery__grid" style={{ marginTop: "30px" }}>
             {loaded
               ? cardData.map((card, index) => (
                   <Card
@@ -187,13 +191,13 @@ const Collage = () => {
           hasMore={checkMorePages()}
           loader={
             <img
-              src="https://res.cloudinary.com/chuloo/image/upload/v1550093026/scotch-logo-gif_jq4tgr.gif"
+              src={spinner}
               alt="loading"
             />
           }
           endMessage={<p>No more results</p>}
         >
-          <div className="image-grid" style={{ marginTop: "30px" }}>
+          <div className="gallery__grid" style={{ marginTop: "30px" }}>
             {loaded
               ? cardData.map((card, index) => (
                   <Card
@@ -214,22 +218,18 @@ const Collage = () => {
   }
 
   return (
-    <div className="hero is-fullheight is-bold is-info">
-      <div className="hero-body">
-        <div className="container">
+    <div className="gallery__container">
 
-          <label>Search for stuff</label>
-          <input
-            type="text"
-            value={searchQuery}
-            placeholder="type a thing"
-            onChange={onChange}
-          />
+      <label>Type to search for specific cards</label>
+      <input
+        type="text"
+        value={searchQuery}
+        placeholder="ex: Guard"
+        onChange={onChange}
+      />
 
-          {renderGallery()}
+      {renderGallery()}
 
-        </div>
-      </div>
     </div>
   );
 };
