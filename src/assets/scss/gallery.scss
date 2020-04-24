@@ -32,11 +32,11 @@
     margin: 2rem 0;
     padding: 0 $gutters;
     
-    .image-item:nth-child(5n){
+    .image-item:nth-child(5n) {
       grid-column-end: span 2;
     }
     
-    img{
+    img {
       height: 300px;
       
       @include medium {

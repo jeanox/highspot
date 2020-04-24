@@ -1,8 +1,8 @@
+@import "assets/scss/colors";
 @import "assets/scss/_site";
 @import "assets/scss/card";
 @import "assets/scss/gallery";
 
-// This stuff should stay
 .App {
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@
     margin-bottom: 1rem;
   }
 
-  &--title {
+  &__title {
     font-family: $font-serif;
     text-align: center;
   }

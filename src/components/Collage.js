@@ -1,8 +1,9 @@
 import spinner from '../assets/images/load.gif';
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Card from '../components/Card';
+import _ from 'lodash';
 
 // INIT variables/values
 let searchTerms = '';
@@ -21,21 +22,15 @@ const Collage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const groomSearchTerms = rawTerms => {
-    
     // I started with this simplegrooming, but wanted something a bit beefier to handle multiple spaces and odd characters
     // searchTerms = rawTerms.split(' ').join(',');
     searchTerms = rawTerms.replace(/[^a-z]+/gi, ',');
   };
   
-
-  // limit the queries so that they're not sending out with every character input
-  // Debounce troubles, commenting out for now
-  // const delayedQuery = useRef(_.debounce(q => groomSearchTerms(q), 20)).current;
-  
+  // I wanted to debounce this; there are queries firing wayyyy too much.
   const onChange = e => {
     setSearchQuery(e.target.value);
-    // delayedQuery(e.target.value);
-    groomSearchTerms(e.target.value); // IF NO DEBOUNCE
+    groomSearchTerms(e.target.value);
 
     // Set Query
     query = `${apiRoot}?pageSize=20&page=1&name=${searchTerms}`;
@@ -49,7 +44,6 @@ const Collage = () => {
     // console.log(`onChange: searchTerms: ${e.target.value} | Card Data:${cardData} | Clear Results: ${clearResults}`);
     console.log(`onChangeQ: query: ${query}`);
     
-    // cardData.splice(0, cardData.length);
     fetchCardData();
 
     // We have to know if it's a search interaction or passive one
@@ -80,7 +74,7 @@ const Collage = () => {
 
         currentPage = currentPage + 1;
 
-        // FIND A WAY to track if a search is happening.
+        // Track if a search is happening
         if (isSearch) {
           setCardData(response.data.cards);
           isSearch = false;
@@ -136,8 +130,8 @@ const Collage = () => {
   ;
 
   const renderGallery = () => {
-    console.log(`RENDER MORE?: ${loadMoreCards}`)
-    // This duplication makes me cry; it serves to re-render the component in 2 instances
+    console.log(`LOAD MORE?: ${loadMoreCards}`)
+    // This duplication serves to re-render the component in 2 instances
     if (clearResults === true) {
       return gallery;
     } else {

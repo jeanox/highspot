@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        <h1 className="header--title">Elder Scrolls Legends ala React.js</h1>
+        <h1 className="header__title">Elder Scrolls Legends ala React.js</h1>
       </div>
 
       <Collage />
