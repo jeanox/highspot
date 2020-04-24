@@ -1,4 +1,4 @@
-# HIGHSPOT Coding Challenge
+# Elder Scrolls Legends via React.js
 
 This is a React.js application for browsing cards from Elder Scrolls Legends. Requirements for this project include:
 
@@ -15,10 +15,6 @@ This is a React.js application for browsing cards from Elder Scrolls Legends. Re
 - In your terminal, cd into the directory you just created
 - Type ```npm install``` to install all dependencies
 - Last, but not least, type ```npm start``` to run the app locally.
-
-## DEPENDENCIES
-- react-infinite-scroll-component
-- axios
 
 ## CAPTAIN'S LOG (a progressive view of how I approached building this)
 KEY:
@@ -63,9 +59,11 @@ KEY:
  - TODO(-1): Review and document the top portion of this README and review comments
 
 
+## Additional Improvements
+There were things I thought of that I was unable to get to or would have extended this project beyond the limited scope of time i have to work on it. I want to document them here
 
-- TODO(?): Performance! On search input, it fires way too much. Debounce?
-  - Debounce gave me troubles while in the middle of building it, so I eliminated it as a variable while debugging other things.
-
-- TODO(?): If the input is empty, it should switch to default scroll/browsing
-
+- Utilize debounce to limit calls to the API on search input. This was attempted, but removed mid-development to eliminate variables while debugging. 
+- If ia user types in a search query, then erases everything, the cards should go back to their initial state. This is likely due to how the query is being triggered specifically.
+- Color maps could be utilized in colors.scss. It's something I like to do to establish color relationships. It also has the bonus of keeping things organized and, in the long term, is easier to keep color scope small
+- Fading the cards in on load one by one is something I really wanted, but I needed to focus on the core requirements rather than get caught up in shiny things
+- Sort Feature. I'm a big fan of effects like Isotope, it would be really interesting to filter by type or deck. Again. Shiny features. Way out of scope for this, but it's where my heart longs to be.
