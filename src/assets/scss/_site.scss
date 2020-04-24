@@ -1,13 +1,15 @@
 // ------------------
 // GENERAL SITE STYLES
 // ------------------
+
 $gutters: 15px;
 
+// Responsive approach: base styles are mobile, medium breakpoint specified in mixin
 $breakpoint-medium: 640px;
 // Medium devices
 @mixin medium {
   @media (min-width: #{$breakpoint-medium}) {
-      @content;
+    @content;
   }
 }
 
@@ -17,12 +19,14 @@ $font-sans: 'Raleway', sans-serif;
 body {
   background-color: $color-grey-lightest;
   font-family: $font-sans;
+  // Font-size and copy-related padding: REM measurements are preferred to keep things accessible to the user's font preferences, so I've endeavored to respect that.
+  font-size: 1rem;
 }
 
 p {
   margin: .5rem 0;
 
   &.error {
-    color: red;
+    color: $color-error;
   }
 }

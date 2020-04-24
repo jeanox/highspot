@@ -56,14 +56,15 @@ KEY:
   - √ BEM standards in scss
   - √ JS vars/funcs/Comps
 
- √ TODO(-1): Review and document the top portion of this README and review comments
+ √ TODO( LAST ): Review and document the top portion of this README and review comments
 
 
 ## Additional Improvements
-There were things I thought of that I was unable to get to or would have extended this project beyond the limited scope of time i have to work on it. I want to document them here
+There were things I thought of that I was unable to get to. Let's document them for future ambitions.
 
 - Utilize debounce to limit calls to the API on search input. This was attempted, but removed mid-development to eliminate variables while debugging. 
-- If ia user types in a search query, then erases everything, the cards should go back to their initial state. This is likely due to how the query is being triggered specifically.
+- If a user types in a search query, then erases everything, the cards should go back to their initial state. This is likely due to how the query is being triggered specifically.
 - Color maps could be utilized in colors.scss. It's something I like to do to establish color relationships. It also has the bonus of keeping things organized and, in the long term, is easier to keep color scope small
 - Fading the cards in on load one by one is something I really wanted, but I needed to focus on the core requirements rather than get caught up in shiny things
 - Sort Feature. I'm a big fan of effects like Isotope, it would be really interesting to filter by type or deck. Again. Shiny features. Way out of scope for this, but it's where my heart longs to be.
+- Continuous Integration. I started this off working through a Docker -> Git -> Circle CI -> AWS deployment in mind. It's been a workflow I've been chipping away at before all this in my spare time. It was clear I was spending too much time on ironing this deployment pipeline out rather than the task, so I had to put my toys away. I'd really like to resume that, though.

@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Card from '../components/Card';
-import _ from 'lodash';
 
 // INIT variables/values
 let searchTerms = '';
