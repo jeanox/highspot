@@ -9,7 +9,7 @@ let searchTerms = '';
 let currentPage = 1;
 let clearResults = false;
 let isSearch = false;
-let isDone = false;
+let loadMoreCards = true;
 
 /*
   I would like to add border-top/bottom based on conditional (type)
@@ -90,7 +90,7 @@ const Collage = () => {
 
   // We're going to load things in batches (pages), which means we'll need to increment with each call
   // initially set it to true so that the first call gets fired before scroll-triggered loading commences
-  let morePages = true;
+  // let morePages = true;
 
 
 
@@ -123,11 +123,14 @@ const Collage = () => {
 
         setIsLoaded(true);
 
-        console.log(response.data.cards.length);
-
-        if (response.data.cards.length === 0) {
-          isDone = true;
+        if (response.data.cards.length === 20) {
+          loadMoreCards = true;
+        } else {
+          loadMoreCards = false;
         }
+        
+        console.log(`CARDS LOADING: ${response.data.cards.length}`);
+        console.log(`LOAD MORE?: ${loadMoreCards}`);
 
         // Keep an eye on how much junk we got! ;D
         // console.log(`Current Page: ${currentPage}, Card Data: ${cardData.length}, More Pages: ${morePages}`);
@@ -138,34 +141,35 @@ const Collage = () => {
       
   };
 
-  const checkMorePages = () => {
+  // const checkMorePages = () => {
 
-    console.log(`IS DONE?: ${isDone}`);
+    console.log(`IS DONE?: ${loadMoreCards}`);
 
-    if (cardData.length >= 20) {
-      morePages = true;
-    } else if (isDone === true) {
-      /// FIGURE OUT IF IT'S DONE
-      morePages = false;
-    } else {
-      morePages = false;
-    }
+  //   if (cardData.length >= 20) {
+  //     morePages = true;
+  //   } else if (loadMoreCards === true) {
+  //     /// FIGURE OUT IF IT'S DONE
+  //     morePages = false;
+  //   } else {
+  //     morePages = false;
+  //   }
 
-    console.log(`MORE PAGES?: ${morePages}, length: ${cardData.length}`);
-    return morePages;
-  }
+  //   console.log(`MORE PAGES?: ${morePages}, length: ${cardData.length}`);
+  //   return morePages;
+  // }
 
   let biki;
   let bikiCount = 0;
 
   const renderGallery = () => {
+    console.log(`RENDER MORE?: ${loadMoreCards}`)
     // This duplication makes me cry; it serves to re-render the component in 2 instances
     if (clearResults === true) {
       biki =
       <InfiniteScroll
           dataLength={cardData}
           next={() => fetchCardData(20) } 
-          hasMore={checkMorePages()}
+          hasMore={loadMoreCards}
           loader={
             <img
               src={spinner}
@@ -196,7 +200,7 @@ const Collage = () => {
         <InfiniteScroll
           dataLength={cardData}
           next={() => fetchCardData(20) } 
-          hasMore={checkMorePages()}
+          hasMore={loadMoreCards}
           loader={
             <img
               src={spinner}
