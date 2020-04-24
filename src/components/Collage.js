@@ -11,18 +11,26 @@ let clearResults = false;
 let isSearch = false;
 let isDone = false;
 
+/*
+  I would like to add border-top/bottom based on conditional (type)
+  - Action
+  - Creature
+  - Item
+  - Support
+*/
+
 const apiRoot = "https://api.elderscrollslegends.io/v1/cards";
 let query = apiRoot;
 
 // I feel like this could be busted out into its own file
 const Card = ({ aKey, url, title, copy, set, type }) => (
   <div className="card--wrap" key={aKey} >
-    <p className="card__title">{title}</p>
     <div className="card__image">
       <img src={url} alt={title}/>
       {/* <pre>{url}</pre> */}
     </div>
     <div className="card__copy">
+      <p className={`card__copy--title ${type.replace(/\s+/g, '-').toLowerCase()}`}>{title}</p>
       <div className="card__copy--meta">
         <p className="">{set}</p>
         <p className="">{type}</p>
@@ -164,9 +172,9 @@ const Collage = () => {
               alt="loading"
             />
           }
-          endMessage={<p>No more results</p>}
+          endMessage={<p className="error" >No more results</p>}
         >
-          <div className="gallery__grid" style={{ marginTop: "30px" }}>
+          <div className="gallery__grid">
             {loaded
               ? cardData.map((card, index) => (
                   <Card
@@ -195,9 +203,9 @@ const Collage = () => {
               alt="loading"
             />
           }
-          endMessage={<p>No more results</p>}
+          endMessage={<p className="error" >No more results</p>}
         >
-          <div className="gallery__grid" style={{ marginTop: "30px" }}>
+          <div className="gallery__grid">
             {loaded
               ? cardData.map((card, index) => (
                   <Card
@@ -220,7 +228,7 @@ const Collage = () => {
   return (
     <div className="gallery__container">
 
-      <label>Type to search for specific cards</label>
+      <label>Scroll to browse or type below to search for cards</label>
       <input
         type="text"
         value={searchQuery}

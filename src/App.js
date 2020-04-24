@@ -7,7 +7,6 @@ function App() {
     <div className="App">
       <div className="header">
         <h1 className="header--title">Elder Scrolls Legends ala React.js</h1>
-        <h2 className="header--subtitle">Scroll to browse or search for specific cards</h2>
       </div>
 
       <Collage />
