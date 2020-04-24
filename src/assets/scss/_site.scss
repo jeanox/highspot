@@ -1,0 +1,37 @@
+// Could make this into a color map and abstract it
+$color-accent: #b20000;
+$color-grey-lightest: #f5f5f5;
+$color-white: #fff;
+$color-black: #000;
+$color-creature: #571d6f;
+$color-action: #b20000;
+$color-item: #3277cc;
+$color-support: #0e5624;
+
+// Global junk
+
+$gutters: 15px;
+
+$breakpoint-medium: 640px;
+// Medium devices
+@mixin medium {
+  @media (min-width: #{$breakpoint-medium}) {
+      @content;
+  }
+}
+
+$font-serif: 'Cardo', serif;
+$font-sans: 'Raleway', sans-serif;
+
+body {
+  background-color: $color-grey-lightest;
+  font-family: $font-sans;
+}
+
+p {
+  margin: .5rem 0;
+
+  &.error {
+    color: red;
+  }
+}
