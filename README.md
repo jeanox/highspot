@@ -27,24 +27,24 @@ KEY:
 - ? further development/research
 - & approaches that were abandoned
 
-### √ TODO(1): limiting the number of API results firing on load to 20; URL params aren't working in the app, but are in postman
+ √ TODO(1): limiting the number of API results firing on load to 20; URL params aren't working in the app, but are in postman
   √ There was a second param to setEffect that needed adding.
 
-### √ TODO(2): Handle results loading vs End Message
+ √ TODO(2): Handle results loading vs End Message
   √ empty term fires END message 
   √ invalid term fires END message
   √ valid term loads results
   ! scrolling to the end of a limited result range, the loading icon still appears (creating new TODO)
 
-### √ TODO(3): Create an input that passes a param to the query
+ √ TODO(3): Create an input that passes a param to the query
 
-### √ TODO(4): Have that query passed into the rendered gallery
+ √ TODO(4): Have that query passed into the rendered gallery
 
-### √ TODO(5): Rendering of the gallery needs to be managed (load, input)
+ √ TODO(5): Rendering of the gallery needs to be managed (load, input)
   ! Simply updating the query isn't enough, since that would append results rather than replace them
     √ Try conditionals to track what's happening and wipe the gallery & re-render if the input is updated
 
-### √ TODO(6): Fix the loading icon appearing when a user scrolls to the end of results
+ √ TODO(6): Fix the loading icon appearing when a user scrolls to the end of results
   √ Just needed a modulo; stuff below were initial thoughts that I didn't end up pursuing
     & Is there a way to check if the query is returning derpy? That could be a convenient solution.
     & (need to get total number of page results)
@@ -52,15 +52,15 @@ KEY:
       & currentPage (do have)
       & if currentPage + 1 > total, return false
 
-### √ TODO(7): Make it PRETTY! :D
+ √ TODO(7): Make it PRETTY! :D
   √ That was relaxing/satisfying
   ? I'm intrigued by the potential of using css classes dynamically in the JS, but am already throwing myself into scss land. I'd rather pick one strategy than split hairs, but I want to do more research on this.
 
-### √ TODO(8): Review naming conventions
+ √ TODO(8): Review naming conventions
   √ BEM standards in scss
   √ JS vars/funcs/Comps
 
-### - TODO(-1): Review and document the top portion of this README and review comments
+ - TODO(-1): Review and document the top portion of this README and review comments
 
 
 
