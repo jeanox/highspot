@@ -1,3 +1,6 @@
+# PREVIEW URL:
+https://jeanox.github.io/highspot/
+
 # Elder Scrolls Legends via React.js
 
 This is a React.js application for browsing cards from Elder Scrolls Legends. Requirements for this project include:
