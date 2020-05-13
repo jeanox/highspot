@@ -1,5 +1,5 @@
 # PREVIEW URL:
-https://jeanox.github.io/highspot/
+https://jeanox.github.io/react-infinite-cards
 
 # Elder Scrolls Legends via React.js
 
