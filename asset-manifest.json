@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/react-infinite-cards/static/css/main.32d10994.chunk.css",
+    "main.js": "/react-infinite-cards/static/js/main.74e4e74d.chunk.js",
+    "main.js.map": "/react-infinite-cards/static/js/main.74e4e74d.chunk.js.map",
+    "runtime-main.js": "/react-infinite-cards/static/js/runtime-main.8ae957dc.js",
+    "runtime-main.js.map": "/react-infinite-cards/static/js/runtime-main.8ae957dc.js.map",
+    "static/js/2.4d1649fe.chunk.js": "/react-infinite-cards/static/js/2.4d1649fe.chunk.js",
+    "static/js/2.4d1649fe.chunk.js.map": "/react-infinite-cards/static/js/2.4d1649fe.chunk.js.map",
+    "index.html": "/react-infinite-cards/index.html",
+    "precache-manifest.490effa6d84c174ee407d2ca6e119aad.js": "/react-infinite-cards/precache-manifest.490effa6d84c174ee407d2ca6e119aad.js",
+    "service-worker.js": "/react-infinite-cards/service-worker.js",
+    "static/css/main.32d10994.chunk.css.map": "/react-infinite-cards/static/css/main.32d10994.chunk.css.map",
+    "static/js/2.4d1649fe.chunk.js.LICENSE.txt": "/react-infinite-cards/static/js/2.4d1649fe.chunk.js.LICENSE.txt",
+    "static/media/load.gif": "/react-infinite-cards/static/media/load.469a66b5.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8ae957dc.js",
+    "static/js/2.4d1649fe.chunk.js",
+    "static/css/main.32d10994.chunk.css",
+    "static/js/main.74e4e74d.chunk.js"
+  ]
+}
